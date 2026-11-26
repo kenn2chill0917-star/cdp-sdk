@@ -47,7 +47,9 @@ const {
       listTokenBalances: vi.fn().mockResolvedValue({ balances: [], nextPageToken: undefined }),
     },
   };
-  const MockCdpClient = vi.fn().mockImplementation(() => mockCdpClientInstance);
+  const MockCdpClient = vi.fn().mockImplementation(function () {
+    return mockCdpClientInstance;
+  });
 
   return {
     mockCreatePaymentPayload,
@@ -105,7 +107,9 @@ vi.mock("@x402/core/client", () => {
   }
   return {
     x402Client: MockX402Client,
-    x402HTTPClient: vi.fn().mockImplementation(() => ({})),
+    x402HTTPClient: vi.fn().mockImplementation(function () {
+      return {};
+    }),
   };
 });
 
@@ -113,22 +117,34 @@ vi.mock("@x402/core/client", () => {
 // via the `registerExact*Scheme` helper functions), so each is mocked as a
 // plain constructor whose call args (signer, RPC map) tests can assert on.
 vi.mock("@x402/evm/exact/client", () => ({
-  ExactEvmScheme: vi.fn().mockImplementation(() => ({})),
+  ExactEvmScheme: vi.fn().mockImplementation(function () {
+    return {};
+  }),
 }));
 vi.mock("@x402/evm/exact/v1/client", () => ({
-  ExactEvmSchemeV1: vi.fn().mockImplementation(() => ({})),
+  ExactEvmSchemeV1: vi.fn().mockImplementation(function () {
+    return {};
+  }),
 }));
 vi.mock("@x402/evm/upto/client", () => ({
-  UptoEvmScheme: vi.fn().mockImplementation(() => ({})),
+  UptoEvmScheme: vi.fn().mockImplementation(function () {
+    return {};
+  }),
 }));
 vi.mock("@x402/evm/batch-settlement/client", () => ({
-  BatchSettlementEvmScheme: vi.fn().mockImplementation(() => ({})),
+  BatchSettlementEvmScheme: vi.fn().mockImplementation(function () {
+    return {};
+  }),
 }));
 vi.mock("@x402/svm/exact/client", () => ({
-  ExactSvmScheme: vi.fn().mockImplementation(() => ({})),
+  ExactSvmScheme: vi.fn().mockImplementation(function () {
+    return {};
+  }),
 }));
 vi.mock("@x402/svm/exact/v1/client", () => ({
-  ExactSvmSchemeV1: vi.fn().mockImplementation(() => ({})),
+  ExactSvmSchemeV1: vi.fn().mockImplementation(function () {
+    return {};
+  }),
 }));
 
 vi.mock("../client/cdp.js", () => ({ CdpClient: MockCdpClient }));

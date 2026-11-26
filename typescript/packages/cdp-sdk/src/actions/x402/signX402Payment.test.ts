@@ -20,10 +20,12 @@ const mockPayload: PaymentPayload = {
 const mockCreatePaymentPayload = vi.fn().mockResolvedValue(mockPayload);
 
 vi.mock("@x402/core/client", () => ({
-  x402Client: vi.fn().mockImplementation(() => ({
-    register: vi.fn(),
-    createPaymentPayload: mockCreatePaymentPayload,
-  })),
+  x402Client: vi.fn().mockImplementation(function () {
+    return {
+      register: vi.fn(),
+      createPaymentPayload: mockCreatePaymentPayload,
+    };
+  }),
 }));
 
 vi.mock("@x402/evm/exact/client", () => ({
@@ -31,12 +33,16 @@ vi.mock("@x402/evm/exact/client", () => ({
 }));
 
 vi.mock("@x402/evm/upto/client", () => ({
-  UptoEvmScheme: vi.fn().mockImplementation(() => ({})),
+  UptoEvmScheme: vi.fn().mockImplementation(function () {
+    return {};
+  }),
 }));
 
 vi.mock("@x402/svm/exact/client", () => ({
   registerExactSvmScheme: vi.fn(),
-  ExactSvmScheme: vi.fn().mockImplementation(() => ({})),
+  ExactSvmScheme: vi.fn().mockImplementation(function () {
+    return {};
+  }),
 }));
 
 vi.mock("../../x402/account-signers.js", () => ({

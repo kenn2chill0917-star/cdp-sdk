@@ -23,10 +23,10 @@ import {
 } from "./account-signers.js";
 import { CDP_SDK_CLIENT_BUILDER_CODE, toServiceBuilderCodes } from "./builder-code.js";
 import { baseMainnetCaip2, baseSepoliaCaip2, getDefaultEvmRpcUrls } from "./constants.js";
-import { CdpClient } from "../client/cdp.js";
 import { applySpendControls } from "./guardrails/apply.js";
 import { normalizeNetwork } from "./guardrails/normalize.js";
 import { findSmartAccountByOwner, isOwnerAlreadyHasSmartWalletError } from "./smart-account.js";
+import { CdpClient } from "../client/cdp.js";
 
 import type { SpendControls } from "./guardrails/types.js";
 import type { Network, PaymentPayload, PaymentRequired } from "@x402/core/types";

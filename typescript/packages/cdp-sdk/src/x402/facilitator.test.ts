@@ -6,12 +6,14 @@ import { CDP_FACILITATOR_URL, createCdpFacilitatorClient } from "./facilitator.j
 
 const { MockHTTPFacilitatorClient, mockGenerateJwt } = vi.hoisted(() => {
   const mockGenerateJwt = vi.fn();
-  const MockHTTPFacilitatorClient = vi.fn().mockImplementation(config => ({
-    _config: config,
-    verify: vi.fn(),
-    settle: vi.fn(),
-    getSupported: vi.fn(),
-  }));
+  const MockHTTPFacilitatorClient = vi.fn().mockImplementation(function (config) {
+    return {
+      _config: config,
+      verify: vi.fn(),
+      settle: vi.fn(),
+      getSupported: vi.fn(),
+    };
+  });
 
   return { MockHTTPFacilitatorClient, mockGenerateJwt };
 });
