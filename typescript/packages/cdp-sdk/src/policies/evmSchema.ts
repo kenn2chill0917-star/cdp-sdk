@@ -1,5 +1,10 @@
-import { Abi, Address } from "abitype/zod";
+import { Abi as AbiSchema, Address as AddressSchema } from "abitype/zod";
 import { z } from "zod";
+
+import type { Abi as AbiType, Address as AddressType } from "abitype";
+
+const Abi = AbiSchema as z.ZodType<AbiType>;
+const Address = AddressSchema as z.ZodType<AddressType>;
 
 /**
  * Enum for EthValueOperator values
@@ -262,6 +267,7 @@ export const SignEvmTypedDataFieldCriterionSchema = z.object({
      * EIP-712 compliant map of model names to model definitions.
      */
     types: z.record(
+      z.string(),
       z.array(
         z.object({
           name: z.string(),

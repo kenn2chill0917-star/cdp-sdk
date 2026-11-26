@@ -66,21 +66,29 @@ vi.mock("@x402/core/server", () => {
   });
   x402HTTPResourceServer.prototype.initialize = mockHttpInitialize;
   return {
-    x402ResourceServer: vi.fn().mockImplementation(() => mockResourceServer),
+    x402ResourceServer: vi.fn().mockImplementation(function () {
+      return mockResourceServer;
+    }),
     x402HTTPResourceServer,
   };
 });
 
 vi.mock("@x402/evm/exact/server", () => ({
-  ExactEvmScheme: vi.fn().mockImplementation(() => ({ scheme: "exact", network: "eip155:*" })),
+  ExactEvmScheme: vi.fn().mockImplementation(function () {
+    return { scheme: "exact", network: "eip155:*" };
+  }),
 }));
 
 vi.mock("@x402/evm/upto/server", () => ({
-  UptoEvmScheme: vi.fn().mockImplementation(() => ({ scheme: "upto", network: "eip155:*" })),
+  UptoEvmScheme: vi.fn().mockImplementation(function () {
+    return { scheme: "upto", network: "eip155:*" };
+  }),
 }));
 
 vi.mock("@x402/svm/exact/server", () => ({
-  ExactSvmScheme: vi.fn().mockImplementation(() => ({ scheme: "exact", network: "solana:*" })),
+  ExactSvmScheme: vi.fn().mockImplementation(function () {
+    return { scheme: "exact", network: "solana:*" };
+  }),
 }));
 
 vi.mock("./facilitator.js", () => ({
@@ -89,17 +97,19 @@ vi.mock("./facilitator.js", () => ({
 
 // Mock the CdpClient used for wallet provisioning
 vi.mock("../client/cdp.js", () => ({
-  CdpClient: vi.fn().mockImplementation(() => ({
-    evm: {
-      getOrCreateAccount: vi.fn().mockResolvedValue({ address: MOCK_EVM_ADDRESS }),
-      getOrCreateSmartAccount: vi.fn().mockResolvedValue({ address: MOCK_EVM_ADDRESS }),
-      getSmartAccount: vi.fn().mockResolvedValue({ address: MOCK_EVM_ADDRESS }),
-      listSmartAccounts: vi.fn().mockResolvedValue({ accounts: [], nextPageToken: undefined }),
-    },
-    solana: {
-      getOrCreateAccount: vi.fn().mockResolvedValue({ address: MOCK_SVM_ADDRESS }),
-    },
-  })),
+  CdpClient: vi.fn().mockImplementation(function () {
+    return {
+      evm: {
+        getOrCreateAccount: vi.fn().mockResolvedValue({ address: MOCK_EVM_ADDRESS }),
+        getOrCreateSmartAccount: vi.fn().mockResolvedValue({ address: MOCK_EVM_ADDRESS }),
+        getSmartAccount: vi.fn().mockResolvedValue({ address: MOCK_EVM_ADDRESS }),
+        listSmartAccounts: vi.fn().mockResolvedValue({ accounts: [], nextPageToken: undefined }),
+      },
+      solana: {
+        getOrCreateAccount: vi.fn().mockResolvedValue({ address: MOCK_SVM_ADDRESS }),
+      },
+    };
+  }),
 }));
 
 vi.mock("node:fs/promises", () => ({
@@ -328,9 +338,9 @@ describe("createX402Server", () => {
           getOrCreateAccount: vi.fn().mockResolvedValue({ address: MOCK_SVM_ADDRESS }),
         },
       };
-      vi.mocked(CdpClient).mockImplementationOnce(
-        () => mockCdpInstance as ReturnType<typeof CdpClient>,
-      );
+      vi.mocked(CdpClient).mockImplementationOnce(function () {
+        return mockCdpInstance as ReturnType<typeof CdpClient>;
+      });
 
       const server = await createX402Server({
         routes: SIMPLE_ROUTES,
@@ -361,9 +371,9 @@ describe("createX402Server", () => {
     it("does not provision a Solana account for an EVM-only route", async () => {
       const { CdpClient } = await import("../client/cdp.js");
       const { instance, evmGetOrCreate, solanaGetOrCreate } = makeCdpMock();
-      vi.mocked(CdpClient).mockImplementationOnce(
-        () => instance as unknown as ReturnType<typeof CdpClient>,
-      );
+      vi.mocked(CdpClient).mockImplementationOnce(function () {
+        return instance as unknown as ReturnType<typeof CdpClient>;
+      });
 
       const server = await createX402Server({
         routes: { "GET /evm": { price: "$0.01", networks: ["eip155:8453"] } },
@@ -378,9 +388,9 @@ describe("createX402Server", () => {
     it("does not provision an EVM account for a Solana-only route", async () => {
       const { CdpClient } = await import("../client/cdp.js");
       const { instance, evmGetOrCreate, solanaGetOrCreate } = makeCdpMock();
-      vi.mocked(CdpClient).mockImplementationOnce(
-        () => instance as unknown as ReturnType<typeof CdpClient>,
-      );
+      vi.mocked(CdpClient).mockImplementationOnce(function () {
+        return instance as unknown as ReturnType<typeof CdpClient>;
+      });
 
       const server = await createX402Server({
         routes: {
@@ -397,9 +407,9 @@ describe("createX402Server", () => {
     it("provisions both families for a default (exact) route", async () => {
       const { CdpClient } = await import("../client/cdp.js");
       const { instance, evmGetOrCreate, solanaGetOrCreate } = makeCdpMock();
-      vi.mocked(CdpClient).mockImplementationOnce(
-        () => instance as unknown as ReturnType<typeof CdpClient>,
-      );
+      vi.mocked(CdpClient).mockImplementationOnce(function () {
+        return instance as unknown as ReturnType<typeof CdpClient>;
+      });
 
       await createX402Server({ routes: { "GET /r": { price: "$0.01" } } });
 
