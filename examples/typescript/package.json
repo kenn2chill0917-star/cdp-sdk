@@ -4,7 +4,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.70.0",
     "@coinbase/cdp-sdk": "workspace:*",
-    "@modelcontextprotocol/sdk": "^1.12.1",
+    "@modelcontextprotocol/sdk": "^1.32.0",
     "@solana-program/system": "0.10.0",
     "@solana-program/token": "0.9.0",
     "@solana/kit": "5.5.1",
