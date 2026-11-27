@@ -262,6 +262,7 @@ export const SignEvmTypedDataFieldCriterionSchema = z.object({
      * EIP-712 compliant map of model names to model definitions.
      */
     types: z.record(
+      z.string(),
       z.array(
         z.object({
           name: z.string(),
